@@ -1,0 +1,17 @@
+﻿public interface #ClassName
+{
+    Task<ICollection<#Name>> GetAll#AllName();
+
+    Task<#Name> Get#NameById(int id);
+
+    void Create (#Name #LowerName);
+
+    void Update (#Name #LowerName);
+
+    void Delete (#Name #LowerName);
+}
+
+public interface IUnitOfWork
+{
+    Task CompleteAsync();
+}

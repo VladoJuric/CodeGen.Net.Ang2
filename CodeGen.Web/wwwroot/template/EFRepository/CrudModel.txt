@@ -1,0 +1,36 @@
+﻿public class #ClassName : #IClassName
+{
+    private readonly #DbContextName _ctx;
+
+    public ProductRepository(#DbContextName ctx)
+    {
+        _ctx = ctx;
+    }
+
+    public async Task<ICollection<#Name>> GetAll#TableName()
+    {
+        var #varAllName = await _ctx.#TableName.ToListAsync();
+        return #varAllName;
+    }
+
+    public async Task<#Name> Get#NameById(int id)
+    {
+        var #varName = await _ctx.#TableName.FirstOrDefaultAsync(prod => prod.Id == id);
+        return #varName;
+    }
+
+    public void Create (#Name #varName)
+    {
+        _ctx.#TableName.Add(#varName);
+    }
+
+    public void Update (#Name #varName)
+    {
+        _ctx.#TableName.Update(#varName);
+    }
+
+    public void Delete (#Name #varName)
+    {
+        _ctx.#TableName.Remove(#varName);
+    }
+}

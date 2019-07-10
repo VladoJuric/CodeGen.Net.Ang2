@@ -1,0 +1,14 @@
+﻿public interface IEntity
+{
+    int Id { get; set; }
+
+    DateTime DateCreated { get; set; }
+        
+    string CreatedBy { get; set; }
+
+    DateTime DateModified { get; set; }
+        
+    string ModifiedBy { get; set; }
+        
+    byte[] RowVersion { get; set; }
+}

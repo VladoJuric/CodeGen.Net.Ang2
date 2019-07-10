@@ -1,0 +1,12 @@
+﻿#region IEntity
+  
+    public DateTime DateCreated { get; set; }
+    [Column(TypeName = "varchar(50)")]
+    public string CreatedBy { get; set; }
+    public DateTime DateModified { get; set; }
+    [Column(TypeName = "varchar(50)")]
+    public string ModifiedBy { get; set; }
+    [Timestamp]
+    public byte[] RowVersion { get; set; }
+  
+    #endregion

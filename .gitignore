@@ -1,0 +1,17 @@
+CodeGen\.Web/bin/
+
+\.vs/CodeGen/v15/
+
+\.vs/CodeGen/v16/
+
+CodeGen\.Web/bin/Any CPU/Release/netcoreapp2\.0/
+
+CodeGen\.Web/bin/Debug/netcoreapp2\.0/
+
+CodeGen\.Web/bin/Release/netcoreapp2\.0/
+
+\.vs/
+
+CodeGen\.Web/node_modules/
+
+CodeGen\.Web/obj/

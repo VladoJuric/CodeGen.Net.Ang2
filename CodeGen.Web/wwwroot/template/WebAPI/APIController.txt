@@ -1,0 +1,49 @@
+﻿[Route("#RoutePrefix"), Produces("application/json")]
+public class #APiController : ControllerBase
+{
+    private readonly #IClassName _service;
+
+    public #APiController(#IClassName service)
+    {
+        _service = service;
+    }
+
+    // GET
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        return Ok(await _service.GetAll());
+    }
+
+    // GET
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByID(int id)
+    {
+        return await _service.Get(id);
+    }
+
+    // POST
+    [HttpPost]
+    public async Task<IActionResult> Save([FromBody]#NameDto #DtoName)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        return Ok(await _service.Add(#DtoName));
+    }
+
+    // PUT
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateByID(int id, [FromBody]#NameDto #DtoName)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        return Ok(await _service.Update(id, #DtoName));
+    }
+
+    // DELETE
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteByID(int id)
+    {
+        var #varName = await _service.Remove(id);
+        if (#varName == null) return NotFound();
+        return Ok(#varName);
+    }
+}

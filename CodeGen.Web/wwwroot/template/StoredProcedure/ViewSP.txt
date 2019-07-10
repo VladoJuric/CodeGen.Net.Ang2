@@ -1,0 +1,28 @@
+﻿/****** Object: StoredProcedure #Name  
+******* Script Date: #DateTime
+******* Generator: #GenName
+******* Version: #GenVersion
+******/
+
+IF EXISTS (SELECT * FROM sys.objects WHERE name = #OnlyName AND type = 'V')
+	DROP PROCEDURE #Name
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW #Name
+AS
+SET NOCOUNT ON
+SET XACT_ABORT ON
+
+	IF NOT EXISTS (#TableCheck)
+	BEGIN
+		RETURN
+	END
+
+	#Body
+
+GO

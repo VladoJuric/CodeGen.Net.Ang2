@@ -1,0 +1,47 @@
+﻿/****** Object: StoredProcedure #Name  
+******* Script Date: #DateTime
+******* Generator: #GenName
+******* Version: #GenVersion
+******/
+
+IF EXISTS (SELECT * FROM sys.objects WHERE name = #OnlyName AND type = 'P')
+	DROP PROCEDURE #Name
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE #Name
+(
+  #Param
+)
+AS
+SET NOCOUNT ON
+SET XACT_ABORT ON
+BEGIN
+BEGIN TRY
+	IF NOT EXISTS (#TableCheck)
+	BEGIN
+		RETURN
+	END
+
+	BEGIN TRANSACTION;
+	BEGIN		
+		#Body
+	END 	
+	COMMIT TRANSACTION;
+END TRY
+BEGIN CATCH
+	IF @@TRANCOUNT > 0
+	ROLLBACK TRANSACTION;
+	DECLARE @ErrorNumber INT = ERROR_NUMBER();
+	DECLARE @ErrorLine INT = ERROR_LINE();
+	DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+	DECLARE @ErrorSeverity INT = ERROR_SEVERITY();
+	DECLARE @ErrorState INT = ERROR_STATE();
+	--print @ErrorMessage; print @ErrorLine
+END CATCH
+END
+GO

@@ -1,0 +1,12 @@
+﻿public interface #ClassName
+{
+    Task<IEnumerable<#NameDto>> GetAllAsync();
+
+    Task<#NameDto> GetByIdAsync (int id);
+	
+    Task Create (#NameDto entity);
+	
+    Task Update (int id, #NameDto entity);
+	
+    Task Delete (int id);
+}

@@ -1,0 +1,6 @@
+﻿public class #ClassName : IEntity
+{
+    public int Id { get; set; }
+    #Properties
+    #reginIEntity
+}

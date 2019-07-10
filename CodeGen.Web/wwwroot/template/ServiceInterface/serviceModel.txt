@@ -1,0 +1,58 @@
+﻿public class #ClassName : #IClassName
+{
+    private readonly #Mapper _mapper;
+    private readonly #IRepoName _repository;
+    private readonly #IUnitWork _unitOfWork;
+
+    public #ClassName(#Mapper mapper, #IRepoName repository, #IUnitWork unitOfWork)
+    {
+        _mapper = mapper;
+        _repository = repository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<ICollection<#NameDto>> GetAllAsync()
+    {
+        var #varAllName = await _repository.GetAll#AllName();
+        return _mapper.Map<ICollection<#Name>, ICollection<#NameDto>>(#varAllName);
+    }
+
+    public async Task<#NameDto> GetByIdAsync (int id)
+    {
+        var #varName = await _repository.Get#Name(id);
+        return _mapper.Map<#Name, #NameDto>(#varName);
+    }
+
+    public async Task<#NameDto> Create (#NameDto #DtoName)
+    {
+        var #varName = _mapper.Map<#NameDto, #Name>(#DtoName);
+        _repository.Add#Name(#varName);
+        await _unitOfWork.CompleteAsync();
+
+        return _mapper.Map<#Name, #NameDto>(#varName);
+    }
+
+    public async Task<#NameDto> Update (int id, #NameDto #DtoName)
+    {
+        var #varName = await _repository.Get#Name(id);
+
+        #varName = _mapper.Map(#NameDto, #varName);
+        _repository.Update#Name(#varName);
+        await _unitOfWork.CompleteAsync();
+
+        return _mapper.Map<#Name, #NameDto>(#varName);
+    }
+
+    public async Task<#NameDto> Delete (int id)
+    {
+        var #varName = await _repository.Get#Name(id);d
+
+        if (#varName != null)
+        {
+            _repository.Remove#Name(#varName);
+            await _unitOfWork.CompleteAsync();
+        }
+
+        return _mapper.Map<#Name, #NameDto>(#varName);
+    }
+}

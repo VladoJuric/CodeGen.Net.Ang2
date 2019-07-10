@@ -1,0 +1,8 @@
+﻿public class #Name : DbContext
+{
+    public DbSet<#dbTableName> #TableName { get; set; }
+
+    public #Name (DbContextOptions<#Name> options) : base(options)
+    {
+    }
+}

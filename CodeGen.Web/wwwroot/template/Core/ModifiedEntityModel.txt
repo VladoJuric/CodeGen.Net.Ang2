@@ -1,0 +1,12 @@
+﻿
+public class ModifiedEntity
+{
+    public int Id { get; set; }
+    public byte[] RowVersion { get; set; }
+}
+
+public class ModifiedEntityDto
+{
+    public int Id { get; set; }
+    public byte[] RowVersion { get; set; }
+}
