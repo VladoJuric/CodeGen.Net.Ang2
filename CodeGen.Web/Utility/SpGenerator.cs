@@ -16,8 +16,7 @@ namespace CodeGen.Web.Utility
         {
             StringBuilder builderPrm = new StringBuilder();
             StringBuilder builderBody = new StringBuilder();
-            StringBuilder builderCheck = new StringBuilder();
-            builderPrm.Clear(); builderBody.Clear(); builderCheck.Clear();
+            builderPrm.Clear(); builderBody.Clear();
 
             string path = @"" + contentRootPath + "\\template\\StoredProcedure\\InsertSP.txt";
             string fileContent = string.Empty; string fileld = string.Empty; string fileldPrm = string.Empty; string queryPrm = string.Empty;
@@ -45,9 +44,6 @@ namespace CodeGen.Web.Utility
             queryPrm = builderPrm.Remove((builderPrm.Length - 1), 1).AppendLine().ToString();
             //queryPrm = builderPrm.ToString().TrimEnd(',');
 
-            //Check
-            builderCheck.Append("SELECT * FROM [" + tableSchema + "].[" + tableName + "]");
-
             //Body
             builderBody.Append("INSERT INTO [" + tableSchema + "].[" + tableName + "](");
             builderBody.Append(fileld.TrimEnd(',') + ") ");
@@ -61,7 +57,6 @@ namespace CodeGen.Web.Utility
                 fileContent = sr.ReadToEnd()
                     .Replace("#Name", spName.ToString())
                     .Replace("#Param", queryPrm.ToString())
-                    .Replace("#TableCheck", builderCheck.ToString())
                     .Replace("#Body", builderBody.ToString())
                     .Replace("#OnlyName", "Insert" + tableName)
                     .Replace("#DateTime", dateTime)
@@ -77,8 +72,7 @@ namespace CodeGen.Web.Utility
         {
             StringBuilder builderPrm = new StringBuilder();
             StringBuilder builderBody = new StringBuilder();
-            StringBuilder builderCheck = new StringBuilder();
-            builderPrm.Clear(); builderBody.Clear(); builderCheck.Clear();
+            builderPrm.Clear(); builderBody.Clear();
 
             string path = @"" + contentRootPath + "\\template\\StoredProcedure\\ReadSP.txt";
             string fileContent = string.Empty; string fileld = string.Empty; string fileldPrm = string.Empty; string queryPrm = string.Empty;
@@ -93,9 +87,6 @@ namespace CodeGen.Web.Utility
                 fileldPrm = fileldPrm + item.ColumnName + ",";
             }
 
-            //Check
-            builderCheck.Append("SELECT * FROM [" + tableSchema + "].[" + tableName + "]");
-
             //Body
             builderBody.Append("SELECT " + fileldPrm.TrimEnd(',') + " FROM [" + tableSchema + "].[" + tableName + "]");
 
@@ -103,7 +94,6 @@ namespace CodeGen.Web.Utility
             {
                 fileContent = sr.ReadToEnd()
                     .Replace("#Name", spName.ToString())
-                    .Replace("#TableCheck", builderCheck.ToString())
                     .Replace("#Body", builderBody.ToString())
                     .Replace("#OnlyName", "Select" + tableName)
                     .Replace("#OrdPrm", fileldPrm.TrimEnd(',').ToString())
@@ -120,8 +110,7 @@ namespace CodeGen.Web.Utility
         {
             StringBuilder builderPrm = new StringBuilder();
             StringBuilder builderBody = new StringBuilder();
-            StringBuilder builderCheck = new StringBuilder();
-            builderPrm.Clear(); builderBody.Clear(); builderCheck.Clear();
+            builderPrm.Clear(); builderBody.Clear();
 
             string path = @"" + contentRootPath + "\\template\\StoredProcedure\\ReadByID.txt";
             string fileContent = string.Empty; string fileld = string.Empty; string fileldPrm = string.Empty; string queryPrm = string.Empty;
@@ -136,9 +125,6 @@ namespace CodeGen.Web.Utility
                 fileldPrm = fileldPrm + item.ColumnName + ",";
             }
 
-            //Check
-            builderCheck.Append("SELECT * FROM [" + tableSchema + "].[" + tableName + "]");
-
             //Body
             builderBody.Append("SELECT " + fileldPrm.TrimEnd(',') + " FROM [" + tableSchema + "].[" + tableName + "]");
 
@@ -146,7 +132,6 @@ namespace CodeGen.Web.Utility
             {
                 fileContent = sr.ReadToEnd()
                     .Replace("#Name", spName.ToString())
-                    .Replace("#TableCheck", builderCheck.ToString())
                     .Replace("#Body", builderBody.ToString())
                     .Replace("#OnlyName", "Select" + tableName + "ById")
                     .Replace("#OrdPrm", fileldPrm.TrimEnd(',').ToString())
@@ -163,8 +148,7 @@ namespace CodeGen.Web.Utility
         {
             StringBuilder builderPrm = new StringBuilder();
             StringBuilder builderBody = new StringBuilder();
-            StringBuilder builderCheck = new StringBuilder();
-            builderPrm.Clear(); builderBody.Clear(); builderCheck.Clear();
+            builderPrm.Clear(); builderBody.Clear();
 
             string path = @"" + contentRootPath + "\\template\\StoredProcedure\\UpdateSP.txt";
             string fileContent = string.Empty; string fileld = string.Empty; string fileldPrm = string.Empty; string queryPrm = string.Empty;
@@ -196,9 +180,6 @@ namespace CodeGen.Web.Utility
 
             queryPrm = builderPrm.Remove((builderPrm.Length - 1), 1).AppendLine().ToString();
 
-            //Check
-            builderCheck.Append("SELECT * FROM [" + tableSchema + "].[" + tableName + "]");
-
             //Body
             builderBody.Append("UPDATE [" + tableSchema + "].[" + tableName + "] SET " + fileldPrm.TrimEnd(',') + " WHERE Id = @Id");
 
@@ -211,7 +192,6 @@ namespace CodeGen.Web.Utility
                 fileContent = sr.ReadToEnd()
                     .Replace("#Name", spName.ToString())
                     .Replace("#Param", queryPrm.ToString())
-                    .Replace("#TableCheck", builderCheck.ToString())
                     .Replace("#Body", builderBody.ToString())
                     .Replace("#OnlyName", "Update" + tableName)
                     .Replace("#OrdPrm", fileldPrm.ToString())
@@ -228,8 +208,7 @@ namespace CodeGen.Web.Utility
         {
             StringBuilder builderPrm = new StringBuilder();
             StringBuilder builderBody = new StringBuilder();
-            StringBuilder builderCheck = new StringBuilder();
-            builderPrm.Clear(); builderBody.Clear(); builderCheck.Clear();
+            builderPrm.Clear(); builderBody.Clear();
 
             string path = @"" + contentRootPath + "\\template\\StoredProcedure\\DeleteSP.txt";
             string fileContent = string.Empty; string fileld = string.Empty; string fileldPrm = string.Empty; string queryPrm = string.Empty;
@@ -261,9 +240,6 @@ namespace CodeGen.Web.Utility
 
             queryPrm = builderPrm.Remove((builderPrm.Length - 1), 1).AppendLine().ToString();
 
-            //Check
-            builderCheck.Append("SELECT * FROM [" + tableSchema + "].[" + tableName + "]");
-
             //Body
             builderBody.Append("DELETE FROM [" + tableSchema + "].[" + tableName + "] WHERE Id = @Id");
 
@@ -276,7 +252,6 @@ namespace CodeGen.Web.Utility
                 fileContent = sr.ReadToEnd()
                     .Replace("#Name", spName.ToString())
                     .Replace("#Param", queryPrm.ToString())
-                    .Replace("#TableCheck", builderCheck.ToString())
                     .Replace("#Body", builderBody.ToString())
                     .Replace("#OnlyName", "Delete" + tableName)
                     .Replace("#OrdPrm", fileldPrm.ToString())
@@ -293,8 +268,7 @@ namespace CodeGen.Web.Utility
         {
             StringBuilder builderPrm = new StringBuilder();
             StringBuilder builderBody = new StringBuilder();
-            StringBuilder builderCheck = new StringBuilder();
-            builderPrm.Clear(); builderBody.Clear(); builderCheck.Clear();
+            builderPrm.Clear(); builderBody.Clear();
 
             string path = @"" + contentRootPath + "\\template\\StoredProcedure\\ViewSP.txt";
             string fileContent = string.Empty; string fileld = string.Empty; string fileldPrm = string.Empty; string queryPrm = string.Empty;
@@ -318,9 +292,6 @@ namespace CodeGen.Web.Utility
 
             queryPrm = builderPrm.Remove((builderPrm.Length - 1), 1).AppendLine().ToString();
 
-            //Check
-            builderCheck.Append("SELECT * FROM [" + tableSchema + "].[" + tableName + "]");
-
             //Body
             builderBody.Append("SELECT " + fileldPrm.TrimEnd(',') + " FROM [" + tableSchema + "].[" + tableName + "]");
 
@@ -329,7 +300,6 @@ namespace CodeGen.Web.Utility
                 fileContent = sr.ReadToEnd()
                     .Replace("#Name", spName.ToString())
                     .Replace("#Param", queryPrm.ToString())
-                    .Replace("#TableCheck", builderCheck.ToString())
                     .Replace("#Body", builderBody.ToString())
                     .Replace("#OnlyName", "View" + tableName)
                     .Replace("#OrdPrm", fileldPrm.ToString())
