@@ -1,0 +1,77 @@
+﻿public interface I#iUnitName
+{
+    Task<IEnumerable<#RepoName>> GetAll();
+
+    Task<#RepoName> GetById(int id);
+    
+    Task<int> Create(#RepoName entity);
+    
+    Task<byte[]> Update(#RepoName entity);
+    
+    Task Delete(int id, byte[] rowVersion);
+}
+
+public class #iUnitName : I#iUnitName
+{
+    private IDbTransaction _transaction; 
+    private IDbConnection _connection { get { return _transaction.Connection; } }
+
+    public #iUnitName(IDbTransaction transaction)
+    {
+         _transaction = transaction; 
+    }
+
+    public async Task<IEnumerable<#RepoName>> GetAll()
+    {
+        return await _connection.QueryAsync<#RepoName>("[#tableSchema].[Select#tableName]",  
+                                                      commandType: CommandType.StoredProcedure, 
+                                                      transaction:_transaction);
+    }
+
+    public async Task<#RepoName> GetById(int id)
+    {
+        return await _connection.SingleOrDefaultAsync<#RepoName>("[#tableSchema].[Select#tableNameById]",  
+                                                                new {Id = id},
+                                                                commandType: CommandType.StoredProcedure, 
+                                                                transaction:_transaction);
+    }
+
+    public async Task<int> Create(#RepoName entity) 
+    {
+        var queryParams = new DynamicParameters();
+		#Param
+		
+        await _connection.ExecuteAsync("[#tableSchema].[Insert#tableName]",
+                                        queryParams,
+                                        commandType: CommandType.StoredProcedure, 
+                                        transaction:_transaction);
+
+        return queryParams.Get<int>("@Id");
+    }
+
+    public async Task<byte[]> Update(#RepoName entity)
+    {
+        var queryParams = new DynamicParameters();
+        #Param
+	#InOut
+	
+        await _connection.ExecuteAsync("[#tableSchema].[Update#tableName]",
+                                        queryParams,
+                                        commandType: CommandType.StoredProcedure, 
+                                        transaction:_transaction);
+
+        return queryParams.Get<byte[]>("@RowVersion");
+    }
+
+    public Task Delete(int id, byte[] rowVersion)
+    {
+        var queryParams = new DynamicParameters();
+        queryParams.Add("@Id", DbType.Int32, direction: ParameterDirection.Input);
+        queryParams.Add("@RowVersion", entity.RowVersion, DbType.Binary, direction: ParameterDirection.Input);
+
+        return await _connection.ExecuteAsync("[#tableSchema].[Delete#tableName]",
+                                              queryParams,
+                                              commandType: CommandType.StoredProcedure, 
+                                              transaction:_transaction);
+    }
+}

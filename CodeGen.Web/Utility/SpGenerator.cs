@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using CodeGen.Web.Models;
+﻿using CodeGen.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CodeGen.Web.Utility
 {
@@ -30,6 +27,7 @@ namespace CodeGen.Web.Utility
             builderPrm.Append("  @Id INT OUTPUT,");
             foreach (var item in tblColumns)
             {
+                if (item.ColumnName.ToLower() == "id") continue;
                 fileld = fileld + item.ColumnName + ",";
                 fileldPrm = fileldPrm + "@" + item.ColumnName + ",";
 
@@ -49,6 +47,7 @@ namespace CodeGen.Web.Utility
             builderBody.Append(fileld.TrimEnd(',') + ") ");
             //builderBody.AppendLine();
             builderBody.Append("VALUES (" + fileldPrm.TrimEnd(',') + ")");
+            builderBody.AppendLine();
             builderBody.AppendLine();
             builderBody.Append("                SELECT @Id = Id FROM [" + tableSchema + "].[" + tableName + "] WHERE Id = SCOPE_IDENTITY();");
 
@@ -159,8 +158,6 @@ namespace CodeGen.Web.Utility
             string spName = ("[" + tableSchema + "].[Update" + tableName + "]").ToString();
 
             builderPrm.AppendLine();
-            builderPrm.Append("  @Id INT OUTPUT,");
-            builderPrm.AppendLine();
             builderPrm.Append("  @RowVersion [TIMESTAMP] OUTPUT,");
             builderPrm.AppendLine();
             builderPrm.Append("  @Id INT,");
@@ -181,11 +178,13 @@ namespace CodeGen.Web.Utility
             queryPrm = builderPrm.Remove((builderPrm.Length - 1), 1).AppendLine().ToString();
 
             //Body
-            builderBody.Append("UPDATE [" + tableSchema + "].[" + tableName + "] SET " + fileldPrm.TrimEnd(',') + " WHERE Id = @Id");
+            builderBody.Append("UPDATE [" + tableSchema + "].[" + tableName + "] SET " + fileldPrm.TrimEnd(',') + " WHERE Id = @Id AND RowVersion = @RowVersion");
 
             //Return Values
             builderBody.AppendLine();
-            builderBody.Append("                SELECT @Id = Id, @RowVersion = RowVersion FROM [" + tableSchema + "].[" + tableName + "] WHERE Id = SCOPE_IDENTITY();");
+            builderBody.AppendLine();
+            //builderBody.Append("                SELECT @Id = Id, @RowVersion = RowVersion FROM [" + tableSchema + "].[" + tableName + "] WHERE Id = SCOPE_IDENTITY();");
+            builderBody.Append("                SELECT @RowVersion = RowVersion FROM [" + tableSchema + "].[" + tableName + "] WHERE Id = SCOPE_IDENTITY();");
 
             using (StreamReader sr = new StreamReader(path, Encoding.UTF8))
             {
@@ -219,33 +218,18 @@ namespace CodeGen.Web.Utility
             string spName = ("[" + tableSchema + "].[Delete" + tableName + "]").ToString();
 
             builderPrm.AppendLine();
-            builderPrm.Append("  @Id INT OUTPUT,");
-            builderPrm.AppendLine();
-            builderPrm.Append("  @RowVersion [TIMESTAMP] OUTPUT,");
+            builderPrm.Append("  @RowVersion [TIMESTAMP],");
             builderPrm.AppendLine();
             builderPrm.Append("  @Id INT,");
-            foreach (var item in tblColumns)
-            {
-                if(item.ColumnName.ToLower() == "id") continue;
-                fileld = fileld + item.ColumnName + ",";
-                fileldPrm = fileldPrm + item.ColumnName + ",";
-
-                //parameter
-                builderPrm.AppendLine();
-                if ((item.DataType.ToString() == "nvarchar") || (item.DataType.ToString() == "varchar"))
-                    builderPrm.Append("  @" + item.ColumnName + " VARCHAR(" + item.MaxLength + "),");
-                else
-                    builderPrm.Append("  @" + item.ColumnName + " " + item.DataType.ToUpper() + ",");
-            }
 
             queryPrm = builderPrm.Remove((builderPrm.Length - 1), 1).AppendLine().ToString();
 
             //Body
-            builderBody.Append("DELETE FROM [" + tableSchema + "].[" + tableName + "] WHERE Id = @Id");
+            builderBody.Append("DELETE FROM [" + tableSchema + "].[" + tableName + "] WHERE Id = @Id AND RowVersion = @RowVersion");
 
             //Return Values
             builderBody.AppendLine();
-            builderBody.Append("                SELECT @Id = Id, @RowVersion = RowVersion FROM [" + tableSchema + "].[" + tableName + "] WHERE Id = SCOPE_IDENTITY();");
+            //builderBody.Append("                SELECT @Id = Id, @RowVersion = RowVersion FROM [" + tableSchema + "].[" + tableName + "] WHERE Id = SCOPE_IDENTITY();");
 
             using (StreamReader sr = new StreamReader(path, Encoding.UTF8))
             {

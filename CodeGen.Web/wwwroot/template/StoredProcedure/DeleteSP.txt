@@ -23,9 +23,17 @@ SET XACT_ABORT ON
 BEGIN
 BEGIN TRY
 
+	DECLARE @RowCount INT
+
 	BEGIN TRANSACTION;
 	BEGIN		
 		#Body
+		SELECT @RowCount = @@RowCount
+
+		IF ( @RowCount = 0 )
+		BEGIN
+			RAISEERROR(60000,16,1);
+		END
 	END 	
 	COMMIT TRANSACTION;
 

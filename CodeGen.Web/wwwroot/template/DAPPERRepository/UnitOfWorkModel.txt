@@ -1,0 +1,69 @@
+﻿public interface IUnitOfWork : IDispose
+{
+    I#iUnitName #iUnitName { get; }
+    void SaveChanges();    
+}
+
+
+public class UnitOfWork : IUnitOfWork
+{
+    private IDbConnection _connection; 
+    private IDbTransaction _transaction;
+
+    private I#iUnitName _#iUnitNmLower;
+
+    public UnitOfWork(string connectionString)
+    {
+        _connection = new SqlConnection(connectionString); 
+        _connection.Open(); 
+        _transaction = _connection.BeginTransaction(); 
+    }
+
+    public I#iUnitName #iUnitName
+    {
+        get
+        {
+            return _#iUnitNmLower ?? 
+                   _#iUnitNmLower = new #iUnitName(_transaction);
+        }
+    }
+
+    public void SaveChanges()
+    {
+        try 
+        { 
+            _transaction.Commit(); 
+        } 
+        catch 
+        { 
+            _transaction.Rollback(); 
+            throw; 
+        } 
+        finally 
+        { 
+            _transaction.Dispose(); 
+            _transaction = _connection.BeginTransaction(); 
+            ResetRepositories(); 
+        } 
+    }
+
+    public void Dispose() 
+    { 
+        if (_transaction != null) 
+        { 
+            _transaction.Dispose(); 
+            _transaction = null; 
+        } 
+  
+        if (_connection != null) 
+        { 
+            _connection.Dispose(); 
+            _connection = null; 
+        } 
+    }
+
+    private void ResetRepositories() 
+    { 
+        _#iUnitNmLower = null; 
+    }
+}

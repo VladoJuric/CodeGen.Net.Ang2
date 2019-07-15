@@ -99,7 +99,7 @@ var templatingApp;
                 //l.dbname = null;
                 //l.tblName = null;
                 l.collist = [];
-                if ($("#genCodeSql").text(""), $("#genCodeVm").text(""), $("#genCodeVu").text(""), $("#genCodeAPI").text(""), $("#genCodeRepoEF").text(""), $('#genCodeSI').text(""), 0 < (n = e.data.spCollection).length)
+                if ($("#genCodeSql").text(""), $("#genCodeVm").text(""), $("#genCodeVu").text(""), $("#genCodeAPI").text(""), $("#genCodeRepoEF").text(""), $('#genCodeSI').text(""), $('#genCodeRepoDapper').text(""), 0 < (n = e.data.spCollection).length)
                     for (var t = 0; t < n.length; t++)
                         0 === t ? document.getElementById(o).innerHTML += "--+++++++++ SQL INSERT SP +++++++ \r\n" + n[t] + "\r\n" :
                         1 === t ? document.getElementById(o).innerHTML += "--+++++++++ SQL SELECT SP +++++++++ \r\n" + n[t] + "\r\n" :
@@ -119,7 +119,9 @@ var templatingApp;
                         15 === t ? document.getElementById("genCodeRepoEF").innerHTML += "// +++++++++ REPOSITORY DBCONTEXT PROPERTIES +++++++++ \r\n" + n[t] + "\r\n" :
                         16 === t ? document.getElementById("genCodeRepoEF").innerHTML += "// +++++++++ REPOSITORY UNITOFWORK PROPERTIES +++++++++ \r\n" + n[t] + "\r\n" :
                         17 === t ? document.getElementById("genCodeRepoEF").innerHTML += "// +++++++++ EF REPOSITORY CRUD PROPERTIES +++++++++ \r\n" + n[t] + "\r\n" :
-                        18 === t ? document.getElementById("genCodeRepoADO").innerHTML += "// +++++++++ ADO.NET REPOSITORY PROPERTIES +++++++++ \r\n" + n[t] + "\r\n" :
+                        18 === t ? document.getElementById("genCodeRepoDapper").innerHTML += "// +++++++++ DAPPER ENTITY PROPERTIES +++++++++ \r\n" + n[t] + "\r\n" :
+                        19 === t ? document.getElementById("genCodeRepoDapper").innerHTML += "// +++++++++ DAPPER UNITOFWORK PROPERTIES +++++++++ \r\n" + n[t] + "\r\n" :
+                        20 === t ? document.getElementById("genCodeRepoDapper").innerHTML += "// +++++++++ DAPPER REPOSITORY CRUD PROPERTIES +++++++++ \r\n" + n[t] + "\r\n" :
 						document.getElementById(o).innerHTML += " Error !!"
             }, function (e) {
                 console.log(e)

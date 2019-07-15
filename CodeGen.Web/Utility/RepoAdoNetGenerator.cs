@@ -3,19 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CodeGen.Web.Utility
 {
     public class RepoAdoNetGenerator
     {
-        public static dynamic GenerateDbContext(List<vmColumn> tblColumns, string contentRootPath)
-        {
-
-            return "ADO.NET TEST";
-        }
+        
 
         public static string SingleName(string tableName)
         {

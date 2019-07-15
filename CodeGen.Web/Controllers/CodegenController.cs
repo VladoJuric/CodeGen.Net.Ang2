@@ -127,7 +127,9 @@ namespace CodeGen.Web.Controllers
                 var fileContentDbContext = string.Empty;
                 var fileContentUnitOfWork = string.Empty;
                 var fileContentCrud = string.Empty;
-                var fileContentAdo = string.Empty;
+                var fileModelDapper = string.Empty;
+                var fileIUnitDapper = string.Empty;
+                var fileRepoDapper = string.Empty;
 
                 //SP
                 fileContentSet = SpGenerator.GenerateInsertSP(tblColumns, webRootPath);
@@ -177,9 +179,13 @@ namespace CodeGen.Web.Controllers
                 spCollection.Add(fileContentUnitOfWork);
                 spCollection.Add(fileContentCrud);
 
-                //ADO.NET REPO
-                fileContentAdo = RepoAdoNetGenerator.GenerateDbContext(tblColumns, webRootPath);
-                spCollection.Add(fileContentAdo);
+                //DAPPER REPO
+                fileModelDapper = DapperGenerator.GenerateModel(tblColumns, webRootPath);
+                fileIUnitDapper = DapperGenerator.GenerateUnitOfWork(tblColumns, webRootPath);
+                fileRepoDapper = DapperGenerator.GenerateRepository(tblColumns, webRootPath);
+                spCollection.Add(fileModelDapper);
+                spCollection.Add(fileIUnitDapper);
+                spCollection.Add(fileRepoDapper);
             }
             catch (Exception ex)
             {
